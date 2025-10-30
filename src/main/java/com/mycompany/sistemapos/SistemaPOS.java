@@ -25,12 +25,12 @@ public class SistemaPOS {
         inventario.agregarProducto(new Producto(2, "Galleta", 1500, 15));
         inventario.agregarProducto(new Producto(3, "Sandwich", 7000, 10));
 
-        mesas.add(new Mesa(1, "DISPONIBLE"));
-        mesas.add(new Mesa(2, "DISPONIBLE"));
-        mesas.add(new Mesa(3, "RESERVADA"));
+        mesas.add(new Mesa(1, EstadoMesa.DISPONIBLE));
+        mesas.add(new Mesa(2, EstadoMesa.DISPONIBLE));
+        mesas.add(new Mesa(3, EstadoMesa.RESERVADA));
 
-        empleados.add(new Empleado(1, "Laura", "Cajera"));
-        empleados.add(new Empleado(2, "Carlos", "Mesero"));
+        empleados.add(new Empleado(1, "Laura", Cargo.CAJERA));
+        empleados.add(new Empleado(2, "Carlos", Cargo.MESERO));
 
         int idPedido = 1, idFactura = 1;
 
@@ -50,7 +50,7 @@ public class SistemaPOS {
                     break;
 
                 case 2:
-                    inventario.mostrarProductos();
+                    System.out.print(inventario.listarProductosComoTexto());
                     break;
 
                 case 3:
@@ -63,15 +63,24 @@ public class SistemaPOS {
                     int idEmp = sc.nextInt();
                     Empleado emp = empleados.get(idEmp - 1);
 
-                    System.out.print("Número de mesa (1-3): ");
-                    int numMesa = sc.nextInt();
-                    Mesa mesa = mesas.get(numMesa - 1);
-                    mesa.setEstado("OCUPADA");
+                    Mesa mesa = null;
+                    while (true) {
+                        System.out.print("Número de mesa (1-3): ");
+                        int numMesa = sc.nextInt();
+                        mesa = mesas.get(numMesa - 1);
+                        // Validación básica para no asignar mesa ocupada o reservada
+                        if (mesa.getEstado() == EstadoMesa.DISPONIBLE) {
+                            mesa.setEstado(EstadoMesa.OCUPADA);
+                            break;
+                        } else {
+                            System.out.println("La mesa seleccionada no está disponible. Elija otra.");
+                        }
+                    }
 
                     Pedido pedido = new Pedido(idPedido++, cliente, emp, mesa);
 
                     while (true) {
-                        inventario.mostrarProductos();
+                        System.out.print(inventario.listarProductosComoTexto());
                         System.out.print("Ingrese ID del producto (0 para terminar): ");
                         int idProd = sc.nextInt();
                         if (idProd == 0) break;
@@ -79,17 +88,21 @@ public class SistemaPOS {
                         int cantidad = sc.nextInt();
 
                         Producto p = inventario.buscarProductoPorId(idProd);
-                        if (p != null) pedido.agregarProducto(p, cantidad);
+                        if (p != null) {
+                            boolean ok = pedido.agregarProducto(p, cantidad);
+                            if (!ok) System.out.println("❌ No hay suficiente stock para " + p.getNombre());
+                            else System.out.println("Producto agregado: " + p.getNombre() + " x" + cantidad);
+                        }
                     }
 
                     Factura factura = new Factura(idFactura++, pedido);
-                    factura.imprimirFactura();
+                    System.out.print(factura.comoTexto());
                     reporte.agregarFactura(factura);
-                    mesa.setEstado("DISPONIBLE");
+                    mesa.setEstado(EstadoMesa.DISPONIBLE);
                     break;
 
                 case 4:
-                    reporte.mostrarReporte();
+                    System.out.print(reporte.comoTexto());
                     break;
 
                 case 5:

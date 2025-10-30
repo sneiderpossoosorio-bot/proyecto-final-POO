@@ -9,31 +9,32 @@ package com.mycompany.sistemapos;
  * @author janny
  */
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Inventario {
-    private ArrayList<Producto> productos = new ArrayList<>();
+    // Usamos Map para búsquedas O(1) por id (agregación: Inventario agrega productos existentes)
+    private final Map<Integer, Producto> productos = new LinkedHashMap<>();
 
-    public void agregarProducto(Producto p) {
-        productos.add(p);
+    public boolean agregarProducto(Producto p) {
+        if (p == null) return false;
+        if (productos.containsKey(p.getId())) return false; // evitar duplicados por id
+        productos.put(p.getId(), p);
+        return true;
     }
 
-    public ArrayList<Producto> getProductos() {
-        return productos;
+    public List<Producto> getProductos() {
+        return new ArrayList<>(productos.values()); // copia defensiva
     }
 
     public Producto buscarProductoPorId(int id) {
-        for (Producto p : productos) {
-            if (p.getId() == id) return p;
-        }
-        return null;
+        return productos.get(id);
     }
 
-    public void mostrarProductos() {
-        for (Producto p : productos) {
-            System.out.println(p);
+    public String listarProductosComoTexto() {
+        StringBuilder sb = new StringBuilder();
+        for (Producto p : productos.values()) {
+            sb.append(p).append(System.lineSeparator());
         }
+        return sb.toString();
     }
-
-    
 }
