@@ -4,6 +4,23 @@ Este proyecto corresponde al desarrollo de un Sistema POS básico implementado e
 
 
 
+
+## ¿Qué es un Sistema POS para Restaurantes y Cafeterías?
+
+Un Sistema POS (Point of Sale) para restaurantes y cafeterías es una herramienta informática que permite gestionar de forma eficiente las operaciones principales del negocio. Facilita procesos como:
+
+- Registro de pedidos
+- Control de inventario en tiempo real
+- Gestión de mesas
+- Facturación
+- Registro de ventas
+- Generación de reportes
+
+
+Su propósito es optimizar la atención al cliente, mejorar la organización operativa y permitir un control administrativo preciso sobre las ventas y los recursos del establecimiento.
+
+
+
 ## Objetivos del Sistema
 
 * Gestionar mesas con estados: Disponible, Reservada y Ocupada.
