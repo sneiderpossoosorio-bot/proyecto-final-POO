@@ -1,0 +1,13 @@
+com\mycompany\sistemapos\Mesa.class
+com\mycompany\sistemapos\Reporte.class
+com\mycompany\sistemapos\Pedido.class
+com\mycompany\sistemapos\Cliente.class
+com\mycompany\sistemapos\Empleado.class
+com\mycompany\sistemapos\Producto.class
+com\mycompany\sistemapos\Caja.class
+com\mycompany\sistemapos\Factura.class
+com\mycompany\sistemapos\Mesa$Estado.class
+com\mycompany\sistemapos\Inventario.class
+com\mycompany\sistemapos\InputMismatchException.class
+com\mycompany\sistemapos\SistemaPOS.class
+com\mycompany\sistemapos\Persona.class
